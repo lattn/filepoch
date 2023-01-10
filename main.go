@@ -8,14 +8,16 @@ import (
 	"time"
 )
 
+const MagicUT = 1598306400
+
 func main() {
 	if len(os.Args) == 1 {
-		fmt.Println(time.Unix(1598306400, 0).String() + " (1598306400)")
+		fmt.Println(time.Unix(MagicUT, 0).String() + " (1598306400)")
 		return
 	}
 	epoch, err := strconv.Atoi(os.Args[1])
 	if err == nil {
-		fmt.Println(time.Unix(1598306400+int64(epoch)*30, 0))
+		fmt.Println(time.Unix(MagicUT+int64(epoch)*30, 0))
 		return
 	}
 	dur, err := ParseDuration(os.Args[1])
@@ -23,7 +25,7 @@ func main() {
 		_, _ = fmt.Fprintf(os.Stderr, "%v", err)
 		os.Exit(1)
 	}
-	fmt.Println((time.Now().Add(dur).Unix() - 1598306400) / 30)
+	fmt.Println((time.Now().Add(dur).Unix() - MagicUT) / 30)
 }
 
 var unitMap = map[string]int64{
